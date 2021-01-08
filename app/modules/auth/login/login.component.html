@@ -1,0 +1,120 @@
+﻿<div class="login-form login-signin">
+  <form
+    class="form"
+    [formGroup]="loginForm"
+    novalidate="novalidate"
+    id="kt_login_signin_form"
+    (ngSubmit)="submit()"
+  >
+
+    <div class="pb-13 pt-lg-2 pt-3">
+      <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg text-center">
+          سامانه مدیریت کارت هوشمند
+      </h3>
+    </div>
+
+    <ng-container *ngIf="!hasError">
+      <div class="mb-10 alert alert-custom alert-light-info alert-dismissible">
+        <div class="alert-text">
+          به
+          <strong>سامانه مدیریت کارت هوشمند</strong>
+          خوش آمدید
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="hasError">
+      <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+        <div class="alert-text" style="font-weight:bold">نام کاربری یا کلمه عبور اشتباه است</div>
+      </div>
+    </ng-container>
+
+    <div class="form-group">
+      <label class="font-size-h6 font-weight-bolder text-dark">نام کاربری</label>
+      <input
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+        name="user"
+        formControlName="user"
+        autocomplete="off"
+      />
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: ' نام کاربری را وارد نمایید',
+          control: loginForm.controls['user']
+        }"
+      ></ng-container>
+    </div>
+
+    <div class="form-group">
+      <div class="d-flex justify-content-between mt-n5">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">کلمه عبور</label>
+      </div>
+
+      <input
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+        type="password"
+        name="password"
+        autocomplete="off"
+        formControlName="password"
+      />
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'کلمه عبور را وارد نمایید',
+          control: loginForm.controls['password']
+        }"
+      ></ng-container>
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'minlength',
+          message: 'پست الکترونیک حداقل باید 3 کاراکتر داشته باشد',
+          control: loginForm.controls['password']
+        }"
+      ></ng-container>
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'maxLength',
+          message: 'پست الکترونیک حداکثر 100 کاراکتر را دارا می باشد',
+          control: loginForm.controls['password']
+        }"
+      ></ng-container>
+    </div>
+
+    <div class="pb-lg-0 pb-5">
+      <button
+        type="submit"
+        id="kt_login_signin_submit"
+        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
+        [disabled]="loginForm.invalid"
+      >
+        ورود
+      </button>
+
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="spinner spinner-primary ml-5"></span>
+      </ng-container>
+    </div>
+  </form>
+</div>
+
+<ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

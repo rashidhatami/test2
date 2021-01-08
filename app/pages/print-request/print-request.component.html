@@ -1,0 +1,63 @@
+﻿<mat-toolbar color="accent">
+    <mat-toolbar-row><span>{{titleForm}}</span></mat-toolbar-row>
+</mat-toolbar>
+<form
+        (ngSubmit)="getEmployee(form)"
+        #form="ngForm"
+        novalidate
+      novalidate>
+
+
+    <table class="form-half-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width" hideRequiredMarker>
+                    <input matInput
+                           [(ngModel)]="empNoInput"
+                           #name="ngModel"
+                           name="empNoInput"
+                           minlength="6"
+                           maxlength="10"
+                           AcceptNumbers
+                           [OnlyNumber]="true"
+                           [errorStateMatcher]="matcher"
+                           placeholder="شماره پرسنلی را وارد نمایید"
+                           required
+                    />
+
+                </mat-form-field>
+
+
+            </td>
+            <td>
+                <button
+                        color="primary" mat-raised-button>جستجو
+                </button>
+
+                <button
+                        color="primary" mat-raised-button
+                        style="margin-right: 10px"
+                        [style.visibility]="showPrintCard ? 'visible' : 'hidden'"
+                        (click)="printCard()"
+                        type="button">چاپ درخواست
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul class="text-danger list-unstyled" *ngIf="firstSubmitEmpNo && name.invalid">
+                    <li *ngIf="name.errors.required">
+                        لطفا شماره پرسنلی را وارد نمایید
+                    </li>
+                    <li *ngIf="name.errors.minlength || name.errors.maxlength">
+                        شماره پرسنلی نامعتبر است
+                    </li>
+                </ul>
+            </td>
+        </tr>
+  
+    </table>
+    <div class="center">
+        <mat-spinner *ngIf="loading" class="custom-spinner" diameter="50"></mat-spinner>
+    </div>
+</form>

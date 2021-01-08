@@ -1,0 +1,207 @@
+<script src="../../models/rest.datasource.ts"></script>
+<mat-toolbar color="accent">
+    <mat-toolbar-row><span>فرم مدیریت کارت هوشمند پرسنلی</span></mat-toolbar-row>
+</mat-toolbar>
+
+<div class="center">
+    <mat-spinner *ngIf="!loadedData" class="custom-spinner" diameter="50"></mat-spinner>
+</div>
+
+<ejs-grid #grid
+          (actionBegin)='actionBegin($event)'
+          (queryCellInfo)='customiseCell($event)'
+          (rowSelected)="rowSelected($event)"
+          [allowExcelExport]='true'
+          [allowFiltering]='true'
+          [allowPaging]='true'
+          [dataSource]='data'
+          [editSettings]='editSettings'
+          [pageSettings]="pageSettings"
+          id='Grid'
+>
+    <ng-template #toolbarTemplate let-data>
+        <ejs-toolbar (clicked)='clickHandler($event)'>
+            <e-items>
+                <e-item template='<button id="details">مشاهده</button>'></e-item>
+                <e-item type='Separator'></e-item>
+                <e-item template='<button id="accept">تایید</button>'></e-item>
+                <e-item template='<button id="reject">عدم تایید</button>'></e-item>
+                <e-item type='Separator'></e-item>
+                <e-item template='<button id="excel"><i class="far fa-file-excel"></i> خروجی اکسل</button>'></e-item>
+                <e-item type='Separator'></e-item>
+                <e-item template='<button id="printCard">چاپ کارت</button>'></e-item>
+            </e-items>
+        </ejs-toolbar>
+    </ng-template>
+    <e-columns>
+        <e-column field='tcr_OLD_PERSONAL_ID' headerText='کد پرسنلی قدیم' textAlign='Right' width=140></e-column>
+        <e-column field='TCR_NEW_PERSONAL_ID' headerText='کد پرسنلی جدید' textAlign='Right' width=140></e-column>
+        <e-column field='TCR_FIRST_NM' headerText='نام' textAlign='Right' width=140></e-column>
+        <e-column field='TCR_LAST_NM' headerText='نام خانوادگی' width=140></e-column>
+        <e-column field='TCR_NATIONAL_ID' headerText='کد ملی' textAlign='Right' width=140></e-column>
+        <e-column field='RETIRED_DES' headerText='وضعیت اشتغال' textAlign='Right' width=140></e-column>
+        <e-column field='tcr_CARD_PRINTED_DES' headerText='وضعیت چاپ' textAlign='Right' width=120></e-column>
+        <e-column field='tcr_EMPLOYEE_TYPE_DES' headerText='نوع کارت' textAlign='Right' width=120></e-column>
+        <e-column field='TCR_ACCEPT_REJECT_DES' headerText='وضعیت تایید' textAlign='Right' width=120></e-column>
+        <e-column field='TCR_REPLICA_DES' headerText='کارت المثنی' textAlign='Right' width=120></e-column>
+        <e-column field='TCR_DATE_REQUEST' headerText='تاریخ درخواست' textAlign='Right' width=140></e-column>
+        <e-column field='tcr_DELIVERY_DATE' headerText='تاریخ چاپ کارت' textAlign='Right' width=140></e-column>
+        <e-column field='tcr_MOBILE_NO' headerText='شماره موبایل' textAlign='Right' width=120></e-column>
+        <e-column field='tcr_PA_OM' headerText='امور' textAlign='Right' width=140></e-column>
+        <e-column field='tcr_ZIP_CODE' headerText='کد پستی' textAlign='Right' width=140></e-column>
+        <e-column field='tcr_HOME_ADD' headerText='آدرس' textAlign='Right' width=240></e-column>
+    </e-columns>
+</ejs-grid>
+
+<div #container class='root-container'>
+    <ejs-dialog #ejDialog [animationSettings]='animationSettings' [buttons]='buttons' [showCloseIcon]='showCloseIcon'
+                [target]='targetElement' [visible]="false" id='dialog' width='400px'>
+        <ng-template #content>
+            <div class='dialog-content' style="margin-top: 10px;font-size: 14px;">
+                آیا از {{acceptTitle}} کارت مطمئن هستید؟
+            </div>
+            <input type="text" autofocus style="opacity: 0; margin-top: -450px; position: absolute"/>
+            <div *ngIf="acceptLoading" class="centerInDialog">
+                <mat-spinner class="custom-spinner" diameter="50"></mat-spinner>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <div class="e-icon-settings dlg-template" style="color:white !important;" title="تایید درخواست">تایید
+                درخواست
+            </div>
+        </ng-template>
+    </ejs-dialog>
+</div>
+
+<div #containerDetails class='root-container'>
+    <ejs-dialog #ejDialogDetails [animationSettings]='animationSettings' [buttons]='buttonsDetail'
+                [isModal]="true"
+                [showCloseIcon]='showCloseIcon'
+                [target]='targetElementDetails' [visible]="false" id='dialogDetails' width='60%'>
+        <ng-template #content>
+            <div class='dialog-content' style="margin-top: 10px;font-size: 14px;">
+                <table cellspacing="0" class="form-full-width">
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_OLD_PERSONAL_ID" matInput
+                                       placeholder="کد پرسنلی قدیم">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_NEW_PERSONAL_ID" matInput
+                                       placeholder="کد پرسنلی جدید">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_FIRST_NM" matInput
+                                       placeholder="نام">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_LAST_NM" matInput
+                                       placeholder="نام خانوادگی">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+                <table cellspacing="0" class="form-full-width">
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_NATIONAL_ID" matInput
+                                       placeholder="کد ملی">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.RETIRED_DES" matInput
+                                       placeholder="وضعیت اشتغال">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_CARD_PRINTED_DES" matInput
+                                       placeholder=" وضعیت چاپ">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_EMPLOYEE_TYPE_DES" matInput
+                                       placeholder="نوع کارت">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+                <table cellspacing="0" class="form-full-width">
+                    <tr>
+                    <td>
+                        <mat-form-field>
+                            <input [readonly]="true" [value]="this.selectedRecord.TCR_ACCEPT_REJECT_DES" matInput
+                                   placeholder="وضعیت تایید">
+                        </mat-form-field>
+                    </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord['TCR_REPLICA_DES']" matInput
+                                       placeholder="کارت المثنی">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord['tcr_DATE_REQUEST']" matInput
+                                       placeholder="تاریخ درخواست">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_DELIVERY_DATE" matInput
+                                       placeholder="تاریخ چاپ کارت">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 25%">
+                            <mat-form-field>
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_MOBILE_NO" matInput
+                                       placeholder="شماره موبایل">
+                            </mat-form-field>
+                        </td>
+                        <td style="width: 48%; padding-right: 3px !important;">
+                            <mat-form-field style="width: 100%">
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_PA_OM" matInput
+                                       placeholder="امور">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field style="padding-right: 2px !important;">
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_ZIP_CODE" matInput
+                                       placeholder=" کد پستی">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <mat-form-field style="width: 97.5%">
+                                <input [readonly]="true" [value]="this.selectedRecord.tcr_HOME_ADD" matInput
+                                       placeholder="آدرس">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <div class="e-icon-settings dlg-template" style="color:white !important;" title="مشاهده جزئیات ">مشاهده
+                جزئیات
+            </div>
+        </ng-template>
+    </ejs-dialog>
+    </div>

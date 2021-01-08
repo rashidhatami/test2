@@ -1,0 +1,268 @@
+<mat-toolbar color="accent">
+    <mat-toolbar-row><span>
+    {{titleForm}}
+    </span></mat-toolbar-row>
+</mat-toolbar>
+
+<!-- header search -->
+<form
+        (ngSubmit)="getEmployee(form)"
+        #form="ngForm"
+        novalidate>
+<table cellspacing="0" class="form-half-width">
+
+    <tr>
+        <td>
+            <mat-form-field class="form-full-width" hideRequiredMarker>
+                <input matInput
+                       [(ngModel)]="empNoInput"
+                       #name="ngModel"
+                       name="empNoInput"
+                       minlength="6"
+                       maxlength="10"
+                       AcceptNumbers
+                       [OnlyNumber]="true"
+                       [errorStateMatcher]="matcher"
+                       placeholder="شماره پرسنلی را وارد نمایید"
+                       required
+                />
+
+            </mat-form-field>
+        </td>
+        <td>
+            <button
+                    color="primary" mat-raised-button>جستجو
+            </button>
+
+            <button (click)="resetForm(form)"
+                    color="primary" mat-raised-button
+                    style="margin-right: 10px"
+                    type="button">تنظیم مجدد صفحه
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ul class="text-danger list-unstyled" *ngIf="firstSubmitEmpNo && name.invalid">
+                <li *ngIf="name.errors.required">
+                    لطفا شماره پرسنلی را وارد نمایید
+                </li>
+                <li *ngIf="name.errors.minlength || name.errors.maxlength">
+                    شماره پرسنلی نامعتبر است
+                </li>
+            </ul>
+        </td>
+    </tr>
+
+</table>
+</form>
+<!-- header search -->
+
+<!-- detail form -->
+<form
+        (ngSubmit)="submitForm(form)"
+        [formGroup]="formGroup"
+        novalidate>
+    <table cellspacing="0" class="form-full-width">
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="fname" [readonly]="true" matInput placeholder="نام">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="lname" [readonly]="true" matInput  placeholder="نام خانوادگی">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="father" [readonly]="true" matInput  placeholder="نام پدر">
+                </mat-form-field>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="empno" [readonly]="true" matInput placeholder="شماره پرسنلی قدیم">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="emp10" [readonly]="true" matInput placeholder="شماره پرسنلی جدید">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="nationalcode" [readonly]="true" matInput placeholder="کد ملی">
+                </mat-form-field>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="ssn" [readonly]="true" matInput placeholder="شماره شناسنامه">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="brthcity" [readonly]="true" matInput placeholder="محل تولد">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="birthdate" [readonly]="true" matInput placeholder="تاریخ تولد">
+                </mat-form-field>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="licence"  [readonly]="true" matInput placeholder="مدرک تحصیلی">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="coursest"  [readonly]="true" matInput placeholder="رشته تحصیلی">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="empdate" [readonly]="true" matInput placeholder="تاریخ استخدام">
+                </mat-form-field>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="d_pa_om" [readonly]="true" matInput placeholder="مرکز هزینه">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input formControlName="jobtitle" [readonly]="true" matInput placeholder="شغل در سازمان">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input [errorStateMatcher]="matcher"
+                           formControlName="homeadd"
+                           matInput
+                           placeholder="آدرس محل سکونت">
+                </mat-form-field>
+                <ul *ngIf="(formSubmitted || formGroup.controls['homeadd'].dirty) && formGroup.controls['homeadd'].invalid"
+                    class="text-danger list-unstyled">
+                    <li *ngFor="let error of formGroup.getValidationMessages('homeadd')">
+                        {{error}}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input [errorStateMatcher]="matcher" formControlName="mobile" matInput placeholder="تلفن همراه">
+                </mat-form-field>
+                <ul *ngIf="(formSubmitted || formGroup.controls['mobile'].dirty) && formGroup.controls['mobile'].invalid"
+                    class="text-danger list-unstyled">
+                    <li *ngFor="let error of formGroup.getValidationMessages('mobile')">
+                        {{error}}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+    </table>
+
+    <table cellspacing="0" class="form-full-width">
+        <tr>
+            <td>
+                <mat-form-field appearance="fill">
+                    <mat-label>نوع کارت</mat-label>
+                    <select formControlName="typeCard"
+                            [errorStateMatcher]="matcher"
+                            matNativeControl
+                            name="typeCard">
+                        <option selected value=""></option>
+                        <option *ngFor="let item of typeCardItems.Items" [value]="item.value">
+                            {{item.viewValue}}
+                        </option>
+                    </select>
+                </mat-form-field>
+                <ul *ngIf="(formSubmitted || formGroup.controls['typeCard'].dirty) && formGroup.controls['typeCard'].invalid"
+                    class="text-danger list-unstyled">
+                    <li *ngFor="let error of formGroup.getValidationMessages('typeCard')">
+                        {{error}}
+                    </li>
+                </ul>
+            </td>
+
+            <td>
+                <mat-form-field appearance="fill">
+                    <mat-label>محل خدمت</mat-label>
+                    <select formControlName="geoWork"
+                            matNativeControl
+                            [errorStateMatcher]="matcher"
+                            name="geoWork">
+                        <option selected value=""></option>
+                        <option *ngFor="let item of geoWorkItems.Items" [value]="item.value">
+                            {{item.viewValue}}
+                        </option>
+                    </select>
+                </mat-form-field>
+                <ul *ngIf="(formSubmitted || formGroup.controls['geoWork'].dirty) && formGroup.controls['geoWork'].invalid"
+                    class="text-danger list-unstyled">
+                    <li *ngFor="let error of formGroup.getValidationMessages('geoWork')">
+                        {{error}}
+                    </li>
+                </ul>
+            </td>
+
+            <td>
+                <mat-form-field appearance="fill">
+                    <mat-label>کارت المثنی</mat-label>
+                    <select formControlName="duplicateCard"
+                            matNativeControl
+                            [errorStateMatcher]="matcher"
+                            name="duplicateCard">
+                        <option selected value=""></option>
+                        <option *ngFor="let item of duplicateCardItems.Items" [value]="item.value">
+                            {{item.viewValue}}
+                        </option>
+                    </select>
+                </mat-form-field>
+                <ul *ngIf="(formSubmitted || formGroup.controls['duplicateCard'].dirty) && formGroup.controls['duplicateCard'].invalid"
+                    class="text-danger list-unstyled">
+                    <li *ngFor="let error of formGroup.getValidationMessages('duplicateCard')">
+                        {{error}}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <table cellspacing="0" class="form-full-width">
+        <tr>
+            <td>
+                <upload-image></upload-image>
+            </td>
+        </tr>
+    </table>
+
+    <div class="form-button-row" style="margin-bottom: 10px">
+        <button [class.btn-secondary]="formSubmitted && formGroup.invalid"
+                [disabled]="!submittedEmpNo || (formSubmitted && (formGroup.invalid))" color="primary" mat-raised-button
+                type="submit">ذخیره
+        </button>
+    </div>
+
+    <div class="center">
+        <mat-spinner *ngIf="loading" class="custom-spinner" diameter="50"></mat-spinner>
+    </div>
+</form>

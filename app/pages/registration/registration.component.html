@@ -1,0 +1,228 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row><span>
+  {{titleForm}}
+  </span></mat-toolbar-row>
+</mat-toolbar>
+
+<!-- header search -->
+<form (ngSubmit)="getEmployee(formSearch)" #formSearch="ngForm" novalidate>
+<table cellspacing="0" class="form-half-width">
+  <tr>
+      <td>
+          <mat-form-field class="form-full-width" hideRequiredMarker>
+              <input matInput
+                     [(ngModel)]="empNoInput"
+                     #name="ngModel"
+                     name="empNoInput"
+                     minlength="6"
+                     maxlength="10"
+                     AcceptNumbers
+                     [OnlyNumber]="true"
+                     placeholder="شماره پرسنلی را وارد نمایید"
+                     required
+              />
+          </mat-form-field>
+      </td>
+      <td>
+          <button
+                  color="primary" mat-raised-button>جستجو
+          </button>
+
+      </td>
+  </tr>
+  <tr>
+      <td>
+          <ul class="text-danger list-unstyled" *ngIf="name.invalid">
+              <!-- <li *ngIf="name.errors.required">
+                  لطفا شماره پرسنلی را وارد نمایید
+              </li> -->
+              <li *ngIf="name.errors.minlength || name.errors.maxlength">
+                  شماره پرسنلی نامعتبر است
+              </li>
+          </ul>
+      </td>
+  </tr>
+</table>
+</form>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="submit()" novalidate>
+    <table cellspacing="0" class="form-full-width">
+        <tr>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input 
+                    formControlName="fname" 
+                    [readonly]="true" 
+                    matInput 
+                    placeholder="نام">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input 
+                    formControlName="lname" 
+                    [readonly]="true" 
+                    matInput  
+                    placeholder="نام خانوادگی">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-full-width">
+                    <input 
+                    formControlName="father" 
+                    [readonly]="true" 
+                    matInput  
+                    placeholder="نام پدر">
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+          <td>
+              <mat-form-field class="form-full-width">
+                  <input 
+                  formControlName="empno" 
+                  [readonly]="true" 
+                  matInput 
+                  placeholder="شماره پرسنلی قدیم">
+              </mat-form-field>
+          </td>
+          <td>
+              <mat-form-field class="form-full-width">
+                  <input 
+                  formControlName="emp10" 
+                  [readonly]="true" 
+                  matInput  
+                  placeholder="شماره پرسنلی جدید">
+              </mat-form-field>
+          </td>
+          <td>
+              <mat-form-field class="form-full-width">
+                  <input 
+                  formControlName="d_pa_om" 
+                  [readonly]="true" 
+                  matInput  
+                  placeholder="مرکز هزینه">
+              </mat-form-field>
+          </td>
+      </tr>
+      </table>
+<br>
+<br>
+    <table>
+      <tr class="font-size-h5 font-weight-bolder text-dark">
+        <mat-form-field class="form-full-width">
+          <input class="form-control form-control-solid py-7 px-6 rounded-lg font-size-h6"
+          formControlName="username" 
+          type="text"
+          matInput 
+          placeholder="نام کاربری"
+          autocomplete="off" 
+          >
+      </mat-form-field>
+      </tr>
+      <tr class="font-size-h6 font-weight-bolder text-dark">
+        <mat-form-field class="form-full-width">
+          <input class="form-control form-control-solid py-7 px-6 rounded-lg font-size-h6"
+          formControlName="password" 
+          type="password"
+          matInput 
+          placeholder="رمز عبور"
+          autocomplete="off" 
+          >
+      </mat-form-field>
+      </tr>
+      <tr class="font-size-h6 font-weight-bolder text-dark">
+        <mat-form-field class="form-full-width">
+          <input class="form-control form-control-solid py-7 px-6 rounded-lg font-size-h6"
+          formControlName="cPassword" 
+          type="password"
+          matInput 
+          placeholder="رمز عبور را مجدد وارد نمایید"
+          autocomplete="off" 
+          >
+      </mat-form-field>
+      <ng-container
+        *ngIf="
+          registrationForm.controls['cPassword'].errors &&
+          registrationForm.controls['cPassword'].dirty &&
+          registrationForm.controls['cPassword'].errors.ConfirmPassword
+        "
+      >
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            'رمز عبور' و 'تکرار رمز عبور' مطابقت ندارند
+          </div>
+        </div>
+      </ng-container>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+              <mat-label>نوع دسترسی</mat-label>
+              <select 
+              formControlName="accessType"
+              matNativeControl
+              name="accessType">
+                  <option selected value=""></option>
+                  <option *ngFor="let item of accessType.Items" [value]="item.value">
+                      {{item.viewValue}}
+                  </option>
+              </select>
+          </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="fill">
+            <mat-label> گروه کاری</mat-label>
+            <select 
+            formControlName="geoWork"
+            matNativeControl
+            name="geoWork">
+                <option selected value=""></option>
+                <option *ngFor="let item of geoWork.Items" [value]="item.value">
+                    {{item.viewValue}}
+                </option>
+            </select>
+        </mat-form-field>
+    </td>
+      </tr>
+     
+      <br>
+      <tr>
+        <label class="checkbox m-2" style="color:rgb(98, 137, 243) !important;">
+          <input 
+          type="checkbox" 
+          formControlName="agree" 
+          name="agree"/>
+          <span></span>
+          صحت اطلاعات مورد تایید است
+        </label>
+      </tr>
+      <tr class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+    
+        <button
+          type="submit"
+          id="kt_login_signup_submit"
+          [disabled]="
+            registrationForm.invalid || !registrationForm.controls['agree'].value
+          "
+          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"
+        >
+          ثبت کاربر
+        </button>
+        <a
+          routerLink="/"
+          type="button"
+          id="kt_login_signup_cancel"
+          class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
+        >
+          انصراف
+        </a>
+      </tr>
+
+      <div class="center">
+        <mat-spinner *ngIf="loading" class="custom-spinner" diameter="50"></mat-spinner>
+    </div>
+    </table>
+
+  </form>
+  

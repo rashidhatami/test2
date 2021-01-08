@@ -1,0 +1,243 @@
+.mat-toolbar.mat-accent {
+  background: #eb9430;
+  color: #fff;
+  //margin-bottom:10px;
+}
+
+*{
+  font-family: BYekan !important;
+  font-weight:bold;
+}
+
+mat-toolbar{
+  margin-top: -25px;
+}
+
+.e-grid td.e-active {
+  background: #f5a140;
+  color: #000;
+}
+
+.e-grid.e-gridhover tr[role='row']:not(.e-editedrow):hover .e-rowcell:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-grid.e-gridhover tr[role='row']:hover .e-detailrowcollapse:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-grid.e-gridhover tr[role='row']:hover .e-rowdragdrop:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-grid.e-rtl .e-gridhover tr[role='row']:hover .e-rowdragdrop:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-grid.e-gridhover tr[role='row']:hover .e-detailrowexpand:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell) {
+  background-color: #f3c597;
+  color: #000;
+}
+
+:host ::ng-deep .custom-spinner circle{
+  stroke: #f5a140;
+}
+
+.center{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  -moz-transform: translateX(-40%) translateY(-40%);
+  -webkit-transform: translateX(-40%) translateY(-40%);
+  transform: translateX(-40%) translateY(-40%);
+  z-index: 9999;
+}
+
+:host ::ng-deep #accept {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #fffdfd;
+  font-size: 11px;
+  padding: 6px 10px 8px 8px;
+  font-weight: bold;
+  background-color: #11BD4D;
+  border: solid #99C624 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  -moz-transition: opacity .4s ease-out;
+  -webkit-transition: opacity .4s ease-out;
+  -o-transition: opacity .4s ease-out;
+  opacity: 1;
+}
+
+:host ::ng-deep #accept:hover {
+  border: solid #99C624 1px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+:host ::ng-deep #reject {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #fffdfd;
+  font-size: 11px;
+  padding: 6px 10px 8px 8px;
+  font-weight: bold;
+  background-color: #dd4b52;
+  border: solid #BF2027 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  -moz-transition: opacity .4s ease-out;
+  -webkit-transition: opacity .4s ease-out;
+  -o-transition: opacity .4s ease-out;
+  opacity: 1;
+}
+
+:host ::ng-deep #reject:hover {
+  border: solid #BF2027 1px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+:host ::ng-deep #excel{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #fffdfd;
+  font-size: 11px;
+  padding: 4px 10px 6px 8px;
+  font-weight: bold;
+  background-color: #5a68d9;
+  border: solid #43485A 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  -moz-transition: opacity .4s ease-out;
+  -webkit-transition: opacity .4s ease-out;
+  -o-transition: opacity .4s ease-out;
+  opacity: 1;
+}
+
+:host ::ng-deep #excel:hover {
+  border: solid #43485A 1px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+.green {
+  color: #099109 !important;
+}
+
+.red {
+  color: #ee1919 !important;
+}
+
+.blue {
+  color: #112fd4 !important;
+}
+
+.e-dlg-header-content{
+ background-color: #eb9430;
+  color: white !important;
+}
+
+.e-dialog .e-footer-content .e-btn{
+  background-color: #eb9430;
+  color: white !important;
+}
+
+.centerInDialog{
+  -moz-transform: translateX(-40%) translateY(5%);
+  -webkit-transform: translateX(-40%) translateY(5%);
+  transform: translateX(-40%) translateY(5%);
+  z-index: 9999;
+}
+
+.centerInDialog ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #f5a140 !important;
+}
+
+:host ::ng-deep #details{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #fffdfd;
+  font-size: 11px;
+  padding: 5px 10px 8px 10px;
+  font-weight: bold;
+  background-color: #f5a140;
+  border: solid #f1b167 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  -moz-transition: opacity .4s ease-out;
+  -webkit-transition: opacity .4s ease-out;
+  -o-transition: opacity .4s ease-out;
+  opacity: 1;
+}
+
+:host ::ng-deep #details:hover {
+  border: solid #f1b167 1px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+.e-dialog .e-footer-content{
+  display: flex;
+  justify-content: center;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.form-full-width {
+  width: 50%;
+}
+
+:host ::ng-deep .e-footer-content > .e-control e-btn e-lib e-rtl e-flat{
+  padding-bottom: 8px !important;
+}
+
+#dialogDetails_dialog-header > button > span{
+  color: white !important;
+}
+
+
+:host ::ng-deep #printCard{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #fffdfd;
+  font-size: 11px;
+  padding: 5px 10px 8px 10px;
+  font-weight: bold;
+  background-color: #f5a140;
+  border: solid #f1b167 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  -moz-transition: opacity .4s ease-out;
+  -webkit-transition: opacity .4s ease-out;
+  -o-transition: opacity .4s ease-out;
+  opacity: 1;
+}
+
+:host ::ng-deep #printCard:hover {
+  border: solid #f1b167 1px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  opacity: 0.6;
+}

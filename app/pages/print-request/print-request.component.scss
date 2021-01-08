@@ -1,0 +1,54 @@
+form {
+    width: 100%;
+    margin-top:15px;
+}
+
+mat-toolbar {
+    margin-top: -25px;
+}
+
+.form-full-width {
+    width: 100%;
+}
+
+td {
+    padding-right: 8px;
+}
+
+* {
+    font-family: BYekan !important;
+    font-weight: bold;
+}
+
+.mat-toolbar.mat-accent {
+    background: #eb9430;
+    color: #fff;
+}
+
+.form-button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.form-half-width {
+    width: 50%;
+}
+
+td {
+    padding-right: 8px;
+}
+
+:host ::ng-deep .custom-spinner circle{
+    stroke: #f5a140;
+}
+
+.center{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    -moz-transform: translateX(-40%) translateY(-40%);
+    -webkit-transform: translateX(-40%) translateY(-40%);
+    transform: translateX(-40%) translateY(-40%);
+    z-index: 9999;
+}

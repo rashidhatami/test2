@@ -1,0 +1,9 @@
+<img  [src]="imgURL" height="100" width="100"/>
+
+<label  for="getFile" class="col-2 mr-3 btn btn-primary">آپلود تصویر</label>
+
+<input #file accept='image/*' (change)="preview(file.files)" type='file' id="getFile" style="display:none">
+
+<span style="color:#f64e60;" *ngIf="message">{{message}}</span>
+
+
